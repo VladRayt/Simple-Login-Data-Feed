@@ -2,6 +2,10 @@
 
 React Native (Expo) app with Google authentication and data feed.
 
+Built with Ignite CLI boilerplate, Feature-based architecture.
+
+**Demo:** [Watch on Google Drive](https://drive.google.com/file/d/1KLfZgSUmq9gQgpnjXBcYMOKqbH-8asme/view)
+
 ## Setup
 
 ```bash
