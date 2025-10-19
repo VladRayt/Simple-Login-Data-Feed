@@ -54,6 +54,7 @@ npm run android
 - TypeScript
 - Loading/error states
 - Zustand state management
+- ErrorBoundary for global error handling
 
 ## Tech Stack
 
@@ -74,3 +75,9 @@ npm run android
 ## Future Improvements
 
 - Unit and integration tests (Jest, Testing Library)
+- Error tracking and monitoring (Sentry)
+- CI/CD
+
+## Notes
+
+⚠️ **Security Notice:** `ios/GoogleService-Info.plist` and `android/google-services.json` are intentionally tracked in Git for demo purposes. In production, these files should be added to `.gitignore` and managed via environment-specific configurations or CI/CD secrets.
