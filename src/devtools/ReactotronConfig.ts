@@ -9,7 +9,7 @@ import { ArgType } from "reactotron-core-client"
 import { ReactotronReactNative } from "reactotron-react-native"
 import mmkvPlugin from "reactotron-react-native-mmkv"
 
-import { storage } from "@/utils/storage"
+import { storage } from "@/shared/utils/storage"
 
 import { Reactotron } from "./ReactotronClient"
 
