@@ -8,12 +8,17 @@ import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
+import { useRouter } from "expo-router"
+import { useAuthStore } from "@/shared/stores/auth.store"
 
 export const SettingsScreen: FC = function SettingsScreen() {
   const { themed } = useAppTheme()
+  const router = useRouter()
+  const logout = useAuthStore((state) => state.logout)
 
   const handleLogout = () => {
-    console.log("Logout")
+    logout()
+    router.replace("/")
   }
 
   return (

@@ -1,82 +1,89 @@
-import { FC } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-
+import { FC, useCallback } from "react"
+import { ViewStyle, ActivityIndicator, RefreshControl } from "react-native"
+import { LegendList } from "@legendapp/list"
 import { Screen } from "@/shared/components/Screen"
-import { Text } from "@/shared/components/Text"
-import { isRTL } from "@/shared/i18n"
+import { EmptyState } from "@/shared/components/EmptyState"
 import { useAppTheme } from "@/shared/theme/context"
-import { $styles } from "@/shared/theme/styles"
 import type { ThemedStyle } from "@/shared/theme/types"
-import { useSafeAreaInsetsStyle } from "@/shared/utils/useSafeAreaInsetsStyle"
+import { useInfinitePosts } from "../api/posts.api"
+import { PostItem } from "../components/PostItem"
+import type { Post } from "../types/post.types"
+import { ListFooter } from "../components/ListFooter"
+import { LOAD_MORE_THRESHOLD } from "../constants"
 
-const welcomeLogo = require("@assets/images/logo.png")
-const welcomeFace = require("@assets/images/welcome-face.png")
-
-export const HomeScreen: FC = function WelcomeScreen() {
+export const HomeScreen: FC = function HomeScreen() {
   const { themed, theme } = useAppTheme()
 
-  const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    refetch,
+    isRefetching,
+  } = useInfinitePosts()
+
+  const posts = data?.pages.flat() ?? []
+
+  const renderItem = ({ item }: { item: Post }) => <PostItem post={item} />
+
+  const handleLoadMore = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+
+  if (isLoading) {
+    return (
+      <Screen preset="fixed" contentContainerStyle={themed($loadingContainer)}>
+        <ActivityIndicator size="large" color={theme.colors.tint} />
+      </Screen>
+    )
+  }
+
+  if (isError) {
+    return (
+      <Screen preset="fixed">
+        <EmptyState preset="generic" button="Try Again" buttonOnPress={() => refetch()} />
+      </Screen>
+    )
+  }
 
   return (
-    <Screen preset="fixed" contentContainerStyle={$styles.flex1}>
-      <View style={themed($topContainer)}>
-        <Image style={themed($welcomeLogo)} source={welcomeLogo} resizeMode="contain" />
-        <Text
-          testID="welcome-heading"
-          style={themed($welcomeHeading)}
-          tx="welcomeScreen:readyForLaunch"
-          preset="heading"
-        />
-        <Text tx="welcomeScreen:exciting" preset="subheading" />
-        <Image
-          style={$welcomeFace}
-          source={welcomeFace}
-          resizeMode="contain"
-          tintColor={theme.colors.palette.neutral900}
-        />
-      </View>
-
-      <View style={themed([$bottomContainer, $bottomContainerInsets])}>
-        <Text tx="welcomeScreen:postscript" size="md" />
-      </View>
+    <Screen preset="fixed" contentContainerStyle={themed($container)}>
+      <LegendList
+        data={posts}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        recycleItems
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={LOAD_MORE_THRESHOLD}
+        ListFooterComponent={<ListFooter isLoading={isFetchingNextPage} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetching}
+            onRefresh={refetch}
+            tintColor={theme.colors.tint}
+          />
+        }
+        contentContainerStyle={themed($listContent)}
+      />
     </Screen>
   )
 }
 
-const $topContainer: ThemedStyle<ViewStyle> = ({ spacing }) => ({
-  flexShrink: 1,
-  flexGrow: 1,
-  flexBasis: "57%",
+const $container: ThemedStyle<ViewStyle> = () => ({
+  flex: 1,
+})
+
+const $loadingContainer: ThemedStyle<ViewStyle> = () => ({
+  flex: 1,
   justifyContent: "center",
-  paddingHorizontal: spacing.lg,
+  alignItems: "center",
 })
 
-const $bottomContainer: ThemedStyle<ViewStyle> = ({ colors, spacing }) => ({
-  flexShrink: 1,
-  flexGrow: 0,
-  flexBasis: "43%",
-  backgroundColor: colors.palette.neutral100,
-  borderTopLeftRadius: 16,
-  borderTopRightRadius: 16,
-  paddingHorizontal: spacing.lg,
-  justifyContent: "space-around",
-})
-
-const $welcomeLogo: ThemedStyle<ImageStyle> = ({ spacing }) => ({
-  height: 88,
-  width: "100%",
-  marginBottom: spacing.xxl,
-})
-
-const $welcomeFace: ImageStyle = {
-  height: 169,
-  width: 269,
-  position: "absolute",
-  bottom: -47,
-  right: -80,
-  transform: [{ scaleX: isRTL ? -1 : 1 }],
-}
-
-const $welcomeHeading: ThemedStyle<TextStyle> = ({ spacing }) => ({
-  marginBottom: spacing.md,
+const $listContent: ThemedStyle<ViewStyle> = ({ spacing }) => ({
+  paddingTop: spacing.md,
 })

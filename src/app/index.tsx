@@ -1,17 +1,17 @@
 import { useEffect } from "react"
 import { useRouter } from "expo-router"
-
-import { LoginScreen } from "@/features/auth/screens/LoginScreen"
+import { useAuthStore } from "@/shared/stores/auth.store"
+import { LoginScreen } from "@/features/auth"
 
 export default function Index() {
   const router = useRouter()
-  const isAuthenticated = false // TODO: get from auth store
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   useEffect(() => {
     if (isAuthenticated) {
       router.replace("/(tabs)/home")
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated])
 
   return <LoginScreen />
 }

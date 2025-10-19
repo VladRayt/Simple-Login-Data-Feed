@@ -1,25 +1,39 @@
 // features/auth/screens/LoginScreen.tsx
-import { FC, useState } from "react"
+import { FC } from "react"
 import { View, ViewStyle } from "react-native"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter } from "expo-router"
 
 import { Button } from "@/shared/components/Button"
+import { FormTextField } from "@/shared/components/FormTextField"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
-import { TextField } from "@/shared/components/TextField"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
 import { useSafeAreaInsetsStyle } from "@/shared/utils/useSafeAreaInsetsStyle"
+import { useAuthStore } from "@/shared/stores/auth.store"
+import { loginSchema, LoginFormData } from "../schemas/login.schema"
 
 export const LoginScreen: FC = function LoginScreen() {
   const { themed } = useAppTheme()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const router = useRouter()
+  const login = useAuthStore((state) => state.login)
 
   const $containerInsets = useSafeAreaInsetsStyle(["top", "bottom"])
 
-  const handleLogin = () => {
-    // TODO: implement auth logic
-    console.log("Login", { email, password })
+  const { control, handleSubmit } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+
+  const onSubmit = (data: LoginFormData) => {
+    // Зберігаємо email як "токен" (бо БД немає)
+    login(data.email)
+    router.replace("/(tabs)/home")
   }
 
   return (
@@ -34,9 +48,9 @@ export const LoginScreen: FC = function LoginScreen() {
       </View>
 
       <View style={themed($form)}>
-        <TextField
-          value={email}
-          onChangeText={setEmail}
+        <FormTextField
+          control={control}
+          name="email"
           labelTx="loginScreen:emailFieldLabel"
           placeholderTx="loginScreen:emailFieldPlaceholder"
           keyboardType="email-address"
@@ -44,9 +58,9 @@ export const LoginScreen: FC = function LoginScreen() {
           autoCorrect={false}
         />
 
-        <TextField
-          value={password}
-          onChangeText={setPassword}
+        <FormTextField
+          control={control}
+          name="password"
           labelTx="loginScreen:passwordFieldLabel"
           placeholderTx="loginScreen:passwordFieldPlaceholder"
           secureTextEntry
@@ -58,7 +72,7 @@ export const LoginScreen: FC = function LoginScreen() {
           testID="login-button"
           tx="loginScreen:tapToSignIn"
           preset="reversed"
-          onPress={handleLogin}
+          onPress={handleSubmit(onSubmit)}
         />
       </View>
     </Screen>

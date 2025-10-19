@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
+import { QueryClientProvider } from "@tanstack/react-query"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
 
 import { initI18n } from "@/shared/i18n"
+import { queryClient } from "@/shared/services/api/query"
 import { ThemeProvider } from "@/shared/theme/context"
 import { customFontsToLoad } from "@/shared/theme/typography"
 import { loadDateFnsLocale } from "@/shared/utils/formatDate"
@@ -12,9 +14,6 @@ import { loadDateFnsLocale } from "@/shared/utils/formatDate"
 SplashScreen.preventAutoHideAsync()
 
 if (__DEV__) {
-  // Load Reactotron configuration in development. We don't want to
-  // include this in our production bundle, so we are using `if (__DEV__)`
-  // to only execute this in development.
   require("@/devtools/ReactotronConfig")
 }
 
@@ -45,12 +44,14 @@ export default function Root() {
   }
 
   return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ThemeProvider>
-        <KeyboardProvider>
-          <Slot />
-        </KeyboardProvider>
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+        <ThemeProvider>
+          <KeyboardProvider>
+            <Slot />
+          </KeyboardProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   )
 }
