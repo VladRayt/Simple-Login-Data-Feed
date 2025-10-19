@@ -12,9 +12,7 @@
     },
     "newArchEnabled": true,
     "jsEngine": "hermes",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.myapp",
@@ -72,12 +70,7 @@
       ],
       "@react-native-firebase/app",
       "@react-native-firebase/auth",
-      [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps.981118952259-iervon4bmlt62itjcg5puc1d3usm3ihm"
-        }
-      ],
+      "@react-native-google-signin/google-signin",
       "expo-apple-authentication",
       "expo-router"
     ],

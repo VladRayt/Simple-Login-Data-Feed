@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { apiClient } from "@/shared/services/api/client"
 
-import { POSTS_PER_PAGE, POSTS_QUERY_KEY } from "../constants"
+import { POSTS_PER_PAGE, POSTS_QUERY_KEY } from "../constants/home.constants"
 import type { Post } from "../types/post.types"
 
 interface FetchPostsParams {

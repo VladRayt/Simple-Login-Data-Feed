@@ -1,18 +1,18 @@
 import { useEffect } from "react"
-import { useRouter } from "expo-router"
 
 import { LoginScreen } from "@/features/auth"
+import { useNavigation } from "@/shared/navigation/navigation.helpers"
 import { useAuthStore } from "@/shared/stores/auth.store"
 
 export default function Index() {
-  const router = useRouter()
+  const navigation = useNavigation()
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace("/(tabs)/home")
+      navigation.navigateToHome()
     }
-  }, [isAuthenticated, router])
+  }, [isAuthenticated, navigation])
 
   return <LoginScreen />
 }

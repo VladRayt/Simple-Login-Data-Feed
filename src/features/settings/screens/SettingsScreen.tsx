@@ -1,62 +1,48 @@
-// features/settings/screens/SettingsScreen.tsx
-import { FC } from "react"
+import { FC, useCallback } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
-import { useRouter } from "expo-router"
 
 import { Button } from "@/shared/components/Button"
-import { ListItem } from "@/shared/components/ListItem"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
+import { useNavigation } from "@/shared/navigation/navigation.helpers"
+import { signOut } from "@/shared/services/firebase/auth"
 import { useAuthStore } from "@/shared/stores/auth.store"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
 
+import { SettingsList } from "../components/SettingsList"
+import { PREFERENCE_ITEMS } from "../constants/settings.constants"
+
 export const SettingsScreen: FC = function SettingsScreen() {
   const { themed } = useAppTheme()
-  const router = useRouter()
+  const navigation = useNavigation()
   const logout = useAuthStore((state) => state.logout)
 
-  const handleLogout = () => {
-    logout()
-    router.replace("/")
+  const handlers = {
+    language: () => console.log("Language"),
+    theme: () => console.log("Theme"),
   }
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await signOut()
+      logout()
+      navigation.logout()
+    } catch (error) {
+      console.error("Failed to logout:", error)
+    }
+  }, [logout, navigation])
+
+  const preferenceItems = PREFERENCE_ITEMS.map((item) => ({
+    ...item,
+    onPress: handlers[item.handler],
+  }))
 
   return (
     <Screen preset="scroll" contentContainerStyle={themed($container)}>
       <View style={themed($section)}>
-        <Text preset="subheading" tx="settingsScreen:account" style={themed($sectionTitle)} />
-
-        <ListItem
-          tx="settingsScreen:profile"
-          leftIcon="settings"
-          rightIcon="caretRight"
-          onPress={() => console.log("Profile")}
-        />
-
-        <ListItem
-          tx="settingsScreen:notifications"
-          leftIcon="bell"
-          rightIcon="caretRight"
-          onPress={() => console.log("Notifications")}
-        />
-      </View>
-
-      <View style={themed($section)}>
         <Text preset="subheading" tx="settingsScreen:preferences" style={themed($sectionTitle)} />
-
-        <ListItem
-          tx="settingsScreen:language"
-          leftIcon="menu"
-          rightIcon="caretRight"
-          onPress={() => console.log("Language")}
-        />
-
-        <ListItem
-          tx="settingsScreen:theme"
-          leftIcon="view"
-          rightIcon="caretRight"
-          onPress={() => console.log("Theme")}
-        />
+        <SettingsList items={preferenceItems} />
       </View>
 
       <View style={themed($section)}>

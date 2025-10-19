@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Slot, SplashScreen } from "expo-router"
 import { useFonts } from "@expo-google-fonts/space-grotesk"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { KeyboardProvider } from "react-native-keyboard-controller"
 import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-context"
@@ -22,6 +23,8 @@ export default function Root() {
   const [isI18nInitialized, setIsI18nInitialized] = useState(false)
 
   useEffect(() => {
+    GoogleSignin.configure()
+
     initI18n()
       .then(() => setIsI18nInitialized(true))
       .then(() => loadDateFnsLocale())

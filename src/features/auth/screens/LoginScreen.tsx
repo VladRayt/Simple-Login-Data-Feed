@@ -1,25 +1,27 @@
-// features/auth/screens/LoginScreen.tsx
 import { FC } from "react"
 import { View, ViewStyle } from "react-native"
-import { useRouter } from "expo-router"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { Button } from "@/shared/components/Button"
-import { FormTextField } from "@/shared/components/FormTextField"
+import { useAppleAuth, useGoogleAuth } from "@/features/auth"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
+import { useNavigation } from "@/shared/navigation/navigation.helpers"
 import { useAuthStore } from "@/shared/stores/auth.store"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
 import { useSafeAreaInsetsStyle } from "@/shared/utils/useSafeAreaInsetsStyle"
 
+import { LoginForm } from "../components/LoginForm"
+import { SocialLoginButtons } from "../components/SocialLoginButtons"
 import { loginSchema, LoginFormData } from "../schemas/login.schema"
 
 export const LoginScreen: FC = function LoginScreen() {
   const { themed } = useAppTheme()
-  const router = useRouter()
+  const navigation = useNavigation()
   const login = useAuthStore((state) => state.login)
+  const { handleGoogleSignIn, isLoading: isGoogleLoading } = useGoogleAuth()
+  const { handleAppleSignIn, isLoading: isAppleLoading } = useAppleAuth()
 
   const $containerInsets = useSafeAreaInsetsStyle(["top", "bottom"])
 
@@ -32,9 +34,8 @@ export const LoginScreen: FC = function LoginScreen() {
   })
 
   const onSubmit = (data: LoginFormData) => {
-    // Зберігаємо email як "токен" (бо БД немає)
     login(data.email)
-    router.replace("/(tabs)/home")
+    navigation.navigateToHome()
   }
 
   return (
@@ -49,31 +50,13 @@ export const LoginScreen: FC = function LoginScreen() {
       </View>
 
       <View style={themed($form)}>
-        <FormTextField
-          control={control}
-          name="email"
-          labelTx="loginScreen:emailFieldLabel"
-          placeholderTx="loginScreen:emailFieldPlaceholder"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
+        <LoginForm control={control} onSubmit={handleSubmit(onSubmit)} />
 
-        <FormTextField
-          control={control}
-          name="password"
-          labelTx="loginScreen:passwordFieldLabel"
-          placeholderTx="loginScreen:passwordFieldPlaceholder"
-          secureTextEntry
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-
-        <Button
-          testID="login-button"
-          tx="loginScreen:tapToSignIn"
-          preset="reversed"
-          onPress={handleSubmit(onSubmit)}
+        <SocialLoginButtons
+          onGoogleSignIn={handleGoogleSignIn}
+          onAppleSignIn={handleAppleSignIn}
+          isGoogleLoading={isGoogleLoading}
+          isAppleLoading={isAppleLoading}
         />
       </View>
     </Screen>
