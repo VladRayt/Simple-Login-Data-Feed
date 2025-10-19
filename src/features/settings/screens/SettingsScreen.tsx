@@ -1,15 +1,15 @@
 // features/settings/screens/SettingsScreen.tsx
 import { FC } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
+import { useRouter } from "expo-router"
 
 import { Button } from "@/shared/components/Button"
 import { ListItem } from "@/shared/components/ListItem"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
+import { useAuthStore } from "@/shared/stores/auth.store"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
-import { useRouter } from "expo-router"
-import { useAuthStore } from "@/shared/stores/auth.store"
 
 export const SettingsScreen: FC = function SettingsScreen() {
   const { themed } = useAppTheme()

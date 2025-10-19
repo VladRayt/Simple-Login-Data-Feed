@@ -6,6 +6,12 @@ export interface ConfigBaseProps {
 
 export interface ConfigExtraProps {
   API_URL: string
+  FIREBASE_CONFIG: {
+    googleServicesFile: {
+      ios: string
+      android: string
+    }
+  }
 }
 
 export type PersistNavigationConfig = ConfigBaseProps["persistNavigation"]

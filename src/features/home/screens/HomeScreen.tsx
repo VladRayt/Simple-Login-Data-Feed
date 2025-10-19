@@ -1,15 +1,17 @@
 import { FC, useCallback } from "react"
 import { ViewStyle, ActivityIndicator, RefreshControl } from "react-native"
 import { LegendList } from "@legendapp/list"
-import { Screen } from "@/shared/components/Screen"
+
 import { EmptyState } from "@/shared/components/EmptyState"
+import { Screen } from "@/shared/components/Screen"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
+
 import { useInfinitePosts } from "../api/posts.api"
-import { PostItem } from "../components/PostItem"
-import type { Post } from "../types/post.types"
 import { ListFooter } from "../components/ListFooter"
+import { PostItem } from "../components/PostItem"
 import { LOAD_MORE_THRESHOLD } from "../constants"
+import type { Post } from "../types/post.types"
 
 export const HomeScreen: FC = function HomeScreen() {
   const { themed, theme } = useAppTheme()

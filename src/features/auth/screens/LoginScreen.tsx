@@ -1,18 +1,19 @@
 // features/auth/screens/LoginScreen.tsx
 import { FC } from "react"
 import { View, ViewStyle } from "react-native"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "expo-router"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 
 import { Button } from "@/shared/components/Button"
 import { FormTextField } from "@/shared/components/FormTextField"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
+import { useAuthStore } from "@/shared/stores/auth.store"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
 import { useSafeAreaInsetsStyle } from "@/shared/utils/useSafeAreaInsetsStyle"
-import { useAuthStore } from "@/shared/stores/auth.store"
+
 import { loginSchema, LoginFormData } from "../schemas/login.schema"
 
 export const LoginScreen: FC = function LoginScreen() {

@@ -7,4 +7,11 @@
  */
 export default {
   API_URL: "https://jsonplaceholder.typicode.com",
+
+  FIREBASE_CONFIG: {
+    googleServicesFile: {
+      ios: "./src/config/firebase/GoogleService-Info.plist",
+      android: "./src/config/firebase/google-services.json",
+    },
+  },
 }
