@@ -2,26 +2,20 @@ import { FC, useCallback } from "react"
 import { TextStyle, View, ViewStyle } from "react-native"
 
 import { Button } from "@/shared/components/Button"
+import { LanguageSelector } from "@/shared/components/LanguageSelector/LanguageSelector"
 import { Screen } from "@/shared/components/Screen"
 import { Text } from "@/shared/components/Text"
+import { ThemeSelector } from "@/shared/components/ThemeSelector/ThemeSelector"
 import { useNavigation } from "@/shared/navigation/navigation.helpers"
 import { signOut } from "@/shared/services/firebase/auth"
 import { useAuthStore } from "@/shared/stores/auth.store"
 import { useAppTheme } from "@/shared/theme/context"
 import type { ThemedStyle } from "@/shared/theme/types"
 
-import { SettingsList } from "../components/SettingsList"
-import { PREFERENCE_ITEMS } from "../constants/settings.constants"
-
 export const SettingsScreen: FC = function SettingsScreen() {
   const { themed } = useAppTheme()
   const navigation = useNavigation()
   const logout = useAuthStore((state) => state.logout)
-
-  const handlers = {
-    language: () => console.log("Language"),
-    theme: () => console.log("Theme"),
-  }
 
   const handleLogout = useCallback(async () => {
     try {
@@ -33,16 +27,16 @@ export const SettingsScreen: FC = function SettingsScreen() {
     }
   }, [logout, navigation])
 
-  const preferenceItems = PREFERENCE_ITEMS.map((item) => ({
-    ...item,
-    onPress: handlers[item.handler],
-  }))
-
   return (
     <Screen preset="scroll" contentContainerStyle={themed($container)}>
       <View style={themed($section)}>
-        <Text preset="subheading" tx="settingsScreen:preferences" style={themed($sectionTitle)} />
-        <SettingsList items={preferenceItems} />
+        <Text preset="subheading" tx="settingsScreen:language" style={themed($sectionTitle)} />
+        <LanguageSelector />
+      </View>
+
+      <View style={themed($section)}>
+        <Text preset="subheading" tx="settingsScreen:theme" style={themed($sectionTitle)} />
+        <ThemeSelector />
       </View>
 
       <View style={themed($section)}>

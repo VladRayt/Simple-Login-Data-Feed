@@ -6,9 +6,13 @@ const fr: Translations = {
     cancel: "Annuler",
     back: "Retour",
   },
+  tabs: {
+    home: "Accueil",
+    settings: "Paramètres",
+  },
   welcomeScreen: {
     postscript:
-      "psst  — Ce n'est probablement pas à quoi ressemble votre application. (À moins que votre designer ne vous ait donné ces écrans, dans ce cas, mettez la en prod !)",
+      "psst  — Ce n'est probablement pas à quoi ressemble votre application. (À moins que votre designer ne vous ait donné ces écrans, dans ce cas, mettez-la en prod !)",
     readyForLaunch: "Votre application, presque prête pour le lancement !",
     exciting: "(ohh, c'est excitant !)",
   },
@@ -25,6 +29,27 @@ const fr: Translations = {
         "Aucune donnée trouvée pour le moment. Essayez de cliquer sur le bouton pour rafraîchir ou recharger l'application.",
       button: "Essayons à nouveau",
     },
+  },
+  loginScreen: {
+    title: "Bon retour",
+    subtitle: "Connectez-vous pour continuer",
+    emailFieldLabel: "E-mail",
+    emailFieldPlaceholder: "Entrez votre e-mail",
+    passwordFieldLabel: "Mot de passe",
+    passwordFieldPlaceholder: "Entrez votre mot de passe",
+    tapToSignIn: "Se connecter",
+  },
+  settingsScreen: {
+    account: "Compte",
+    preferences: "Préférences",
+    profile: "Profil",
+    notifications: "Notifications",
+    themeLightLabel: "Clair",
+    themeDarkLabel: "Sombre",
+    themeSystemLabel: "Système",
+    language: "Langue",
+    theme: "Thème",
+    logout: "Se déconnecter",
   },
 }
 

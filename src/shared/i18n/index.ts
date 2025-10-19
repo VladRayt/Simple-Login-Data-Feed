@@ -4,20 +4,18 @@ import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
 import "intl-pluralrules"
 
-// if English isn't your default language, move Translations to the appropriate language file.
-import ar from "./ar"
+import { storage } from "@/shared/utils/storage"
+
 import en, { Translations } from "./en"
 import es from "./es"
 import fr from "./fr"
-import hi from "./hi"
-import ja from "./ja"
-import ko from "./ko"
+import uk from "./uk"
 
-const fallbackLocale = "en-US"
+const fallbackLocale = "en"
 
 const systemLocales = Localization.getLocales()
 
-const resources = { ar, en, ko, es, fr, ja, hi }
+const resources = { en, es, fr, uk }
 const supportedTags = Object.keys(resources)
 
 // Checks to see if the device locale matches any of the supported locales
@@ -35,7 +33,6 @@ const locale = pickSupportedLocale()
 
 export let isRTL = false
 
-// Need to set RTL ASAP to ensure the app is rendered correctly. Waiting for i18n to init is too late.
 if (locale?.languageTag && locale?.textDirection === "rtl") {
   I18nManager.allowRTL(true)
   isRTL = true
@@ -46,9 +43,13 @@ if (locale?.languageTag && locale?.textDirection === "rtl") {
 export const initI18n = async () => {
   i18n.use(initReactI18next)
 
+  const storedLanguage = storage.getString("app.language")
+  const systemLanguage = locale?.languageTag.split("-")[0]
+  const initialLanguage = storedLanguage || systemLanguage || fallbackLocale
+
   await i18n.init({
     resources,
-    lng: locale?.languageTag ?? fallbackLocale,
+    lng: initialLanguage,
     fallbackLng: fallbackLocale,
     interpolation: {
       escapeValue: false,
@@ -58,12 +59,14 @@ export const initI18n = async () => {
   return i18n
 }
 
+export const saveLanguage = (language: string) => {
+  storage.set("app.language", language)
+}
+
 /**
  * Builds up valid keypaths for translations.
  */
-
 export type TxKeyPath = RecursiveKeyOf<Translations>
-
 // via: https://stackoverflow.com/a/65333050
 type RecursiveKeyOf<TObj extends object> = {
   [TKey in keyof TObj & (string | number)]: RecursiveKeyOfHandleValue<TObj[TKey], `${TKey}`, true>
