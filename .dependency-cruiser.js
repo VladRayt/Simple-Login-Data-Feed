@@ -175,7 +175,7 @@ module.exports = {
     enhancedResolveOptions: {
       exportsFields: ["exports"],
       conditionNames: ["import", "require", "node", "default"],
-      // React Native / Metro bundler support for platform-specific extensions
+      // React Native / Metro bundler support for platform specific extensions
       // See: https://reactnative.dev/docs/platform-specific-code
       // See: https://github.com/sverweij/dependency-cruiser/issues/511
       extensions,
