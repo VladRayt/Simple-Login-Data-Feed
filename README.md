@@ -71,6 +71,7 @@ npm run android
 - Ky (HTTP client)
 - MMKV storage
 - JSONPlaceholder API
+- FastImage
 
 ## Future Improvements
 
