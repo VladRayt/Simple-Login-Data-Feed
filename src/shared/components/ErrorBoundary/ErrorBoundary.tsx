@@ -1,10 +1,12 @@
 import { Component, ErrorInfo, ReactNode } from "react"
 
+import { PersistNavigation } from "@/config/config.base"
+
 import { ErrorDetails } from "./ErrorDetails"
 
 interface Props {
   children: ReactNode
-  catchErrors: "always" | "dev" | "prod" | "never"
+  catchErrors: PersistNavigation
 }
 
 interface State {
