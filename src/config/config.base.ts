@@ -1,6 +1,12 @@
+export enum PersistNavigation {
+  always = "always",
+  dev = "dev",
+  prod = "prod",
+  never = "never",
+}
 export interface ConfigBaseProps {
-  persistNavigation: "always" | "dev" | "prod" | "never"
-  catchErrors: "always" | "dev" | "prod" | "never"
+  persistNavigation: PersistNavigation
+  catchErrors: PersistNavigation
   exitRoutes: string[]
 }
 
@@ -17,8 +23,8 @@ export interface ConfigExtraProps {
 export type PersistNavigationConfig = ConfigBaseProps["persistNavigation"]
 
 const BaseConfig: ConfigBaseProps = {
-  persistNavigation: "dev",
-  catchErrors: "always",
+  persistNavigation: PersistNavigation.dev,
+  catchErrors: PersistNavigation.always,
   exitRoutes: ["index"],
 }
 
