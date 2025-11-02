@@ -175,7 +175,6 @@ describe("loadDateFnsLocale", () => {
     it("uses English for unsupported language", () => {
       jest.doMock("i18next", () => ({ language: "uk-UA" }))
 
-      // Should not throw, should use en-US as fallback
       expect(() => loadDateFnsLocale()).not.toThrow()
     })
 
