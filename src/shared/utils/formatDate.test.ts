@@ -117,7 +117,6 @@ describe("formatDate", () => {
 
     it("throws error for invalid format token", () => {
       const isoDate = "2024-03-15T12:30:00.000Z"
-      // date-fns will throw error for invalid token
       expect(() => formatDate(isoDate, "XXXX-invalid")).toThrow()
     })
   })
@@ -125,7 +124,6 @@ describe("formatDate", () => {
 
 describe("loadDateFnsLocale", () => {
   afterEach(() => {
-    // Reset modules after each test
     jest.resetModules()
   })
 
