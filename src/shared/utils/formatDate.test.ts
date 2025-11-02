@@ -207,7 +207,6 @@ describe("formatDate integration with locales", () => {
     const date1 = formatDate("2024-03-15T12:00:00.000Z", "MMM dd, yyyy")
     const date2 = formatDate("2024-03-15T12:00:00.000Z", "MMM dd, yyyy")
 
-    // Same date should produce same output
     expect(date1).toBe(date2)
   })
 
