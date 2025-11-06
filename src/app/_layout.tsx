@@ -12,6 +12,7 @@ import { queryClient } from "@/shared/services/api/query"
 import { ThemeProvider } from "@/shared/theme/context"
 import { customFontsToLoad } from "@/shared/theme/typography"
 import { loadDateFnsLocale } from "@/shared/utils/formatDate"
+import { PersistNavigation } from "@/config/config.base"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -48,7 +49,7 @@ export default function Root() {
   }
 
   return (
-    <ErrorBoundary catchErrors="always">
+    <ErrorBoundary catchErrors={PersistNavigation.always}>
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
           <ThemeProvider>
