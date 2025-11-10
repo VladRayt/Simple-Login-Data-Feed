@@ -111,7 +111,6 @@ describe("LoginForm", () => {
       fireEvent.changeText(passwordField, "password123")
       fireEvent.press(submitButton)
 
-      // Чекаємо поки react-hook-form обробить submit
       await waitFor(() => {
         expect(mockSubmit).toHaveBeenCalledTimes(1)
         expect(mockSubmit).toHaveBeenCalledWith({
