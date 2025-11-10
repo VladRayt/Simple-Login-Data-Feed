@@ -103,7 +103,6 @@ describe("LoginForm", () => {
         <LoginFormWrapper onSubmit={mockSubmit} />,
       )
 
-      // Заповнюємо форму валідними даними
       const emailField = getByPlaceholderText(/email/i)
       const passwordField = getByPlaceholderText(/password/i)
       const submitButton = getByTestId("login-button")
