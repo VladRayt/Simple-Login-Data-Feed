@@ -38,8 +38,6 @@ describe("LoginForm", () => {
       const mockSubmit = jest.fn()
       const { getByPlaceholderText } = render(<LoginFormWrapper onSubmit={mockSubmit} />)
 
-      // Перевіряємо що поля відрендерились
-      // Використовуємо regex бо i18n підставляє ключі
       expect(getByPlaceholderText(/email/i)).toBeTruthy()
       expect(getByPlaceholderText(/password/i)).toBeTruthy()
     })
