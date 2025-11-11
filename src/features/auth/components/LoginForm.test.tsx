@@ -217,9 +217,6 @@ describe("LoginForm", () => {
     })
   })
 
-  // ==========================================
-  // EDGE CASES
-  // ==========================================
   describe("edge cases", () => {
     it("handles email with spaces", async () => {
       const mockSubmit = jest.fn()
