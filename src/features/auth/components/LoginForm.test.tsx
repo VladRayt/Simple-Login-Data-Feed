@@ -251,7 +251,6 @@ describe("LoginForm", () => {
       fireEvent.changeText(passwordField, "password123")
       fireEvent.press(submitButton)
 
-      // Should still work
       await waitFor(() => {
         expect(mockSubmit).toHaveBeenCalledWith({
           email: longEmail,
