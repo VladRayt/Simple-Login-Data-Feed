@@ -71,9 +71,6 @@ describe("LoginForm", () => {
     })
   })
 
-  // ==========================================
-  // USER INTERACTION TESTS
-  // ==========================================
   describe("user interaction", () => {
     it("allows user to type in email field", () => {
       const mockSubmit = jest.fn()
