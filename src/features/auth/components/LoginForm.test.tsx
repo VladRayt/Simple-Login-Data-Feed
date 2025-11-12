@@ -304,9 +304,6 @@ describe("LoginForm", () => {
     })
   })
 
-  // ==========================================
-  // INTEGRATION: Full user flow
-  // ==========================================
   describe("full user flow", () => {
     it("completes full login flow: invalid → valid → submit", async () => {
       const mockSubmit = jest.fn()
