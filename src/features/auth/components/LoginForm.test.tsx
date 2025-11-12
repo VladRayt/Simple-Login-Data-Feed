@@ -121,9 +121,6 @@ describe("LoginForm", () => {
     })
   })
 
-  // ==========================================
-  // VALIDATION TESTS - Email
-  // ==========================================
   describe("email validation", () => {
     it("shows error for empty email", async () => {
       const mockSubmit = jest.fn()
