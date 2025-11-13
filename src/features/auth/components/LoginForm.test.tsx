@@ -220,7 +220,6 @@ describe("LoginForm", () => {
       fireEvent.changeText(emailField, " test@example.com ")
       fireEvent.press(submitButton)
 
-      // Zod should fail validation (spaces in email)
       const errorMessage = await findByText(/invalid email address/i)
       expect(errorMessage).toBeTruthy()
     })
