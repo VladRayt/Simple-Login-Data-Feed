@@ -55,7 +55,6 @@ describe("LoginForm", () => {
 
       const passwordField = getByPlaceholderText(/password/i)
 
-      // secureTextEntry має бути true
       expect(passwordField.props.secureTextEntry).toBe(true)
     })
 
