@@ -30,9 +30,6 @@ const LoginFormWrapper = ({
 }
 
 describe("LoginForm", () => {
-  // ==========================================
-  // RENDERING TESTS
-  // ==========================================
   describe("rendering", () => {
     it("renders email and password fields", () => {
       const mockSubmit = jest.fn()
