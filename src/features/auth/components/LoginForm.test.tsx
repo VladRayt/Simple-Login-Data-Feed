@@ -164,9 +164,6 @@ describe("LoginForm", () => {
     })
   })
 
-  // ==========================================
-  // VALIDATION TESTS - Password
-  // ==========================================
   describe("password validation", () => {
     it("shows error for password shorter than 6 characters", async () => {
       const mockSubmit = jest.fn()
