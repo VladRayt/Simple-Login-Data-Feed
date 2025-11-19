@@ -42,7 +42,6 @@ export class ErrorBoundary extends Component<Props, State> {
     // reportCrash(error)
   }
 
-  // Reset the error back to null
   resetError = () => {
     this.setState({ error: null, errorInfo: null })
   }
