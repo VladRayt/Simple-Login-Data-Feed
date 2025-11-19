@@ -28,7 +28,6 @@ export class ErrorBoundary extends Component<Props, State> {
   state = { error: null, errorInfo: null }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // Only set errors if enabled
     if (!this.isEnabled()) {
       return
     }
